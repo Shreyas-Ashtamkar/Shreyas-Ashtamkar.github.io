@@ -1,1 +1,5 @@
 /* your styles go here */
+
+a.instagram,a.email {
+    background-color: transparent !important;
+}

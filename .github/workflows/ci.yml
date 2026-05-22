@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run tests
+      run: |
+        echo "Running tests..."
+        # Add your test commands here
+        # Example: npm test
+
+    - name: Check for linting issues
+      run: |
+        echo "Checking code quality..."
+        # Add your linting commands here
+        # Example: npm run lint
+
+    - name: Build project
+      run: |
+        echo "Building project..."
+        # Add your build commands here
+        # Example: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        # Customize publish_dir based on your build output location

@@ -3,3 +3,7 @@
 a.instagram,a.email {
     background-color: transparent !important;
 }
+
+.about-section .progress .progress-bar-skill5 {
+    background: #4fbfa8;
+}

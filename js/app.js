@@ -222,16 +222,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     const card = document.createElement('div');
                     card.className = 'col-lg-4 col-md-6 mb-4';
                     card.innerHTML = `
-                        <div class="card h-100 shadow-sm text-center" style="padding: 30px; border-radius: 8px; border: none;">
-                            <div class="icon" style="font-size: 40px; margin-bottom: 20px;"><i class="fa fa-github" aria-hidden="true" style="color: #4fbfa8;"></i></div>
-                            <h3 class="heading mb-3 text-400" style="color: #4fbfa8;">
-                                <a href="${repo.html_url}" target="_blank" style="color: #4fbfa8; text-decoration: none;">${repo.name}</a>
-                            </h3>
-                            <p class="description text-justify" style="color: var(--text-secondary, #666);">${repo.description || 'No description available.'}</p>
-                            <div style="margin-top: 15px;">
-                                <span style="color: #888; font-size: 0.9em;"><i class="fa fa-star"></i> ${repo.stargazers_count}</span>
+                        <a href="${repo.html_url}" target="_blank" class="card h-100 shadow-sm" style="padding: 30px; border-radius: 8px; text-decoration: none; display: block; color: inherit;">
+                            <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; gap: 10px; width: 100%;">
+                                <div style="display: flex; align-items: flex-start; gap: 12px; min-width: 0; flex: 1;">
+                                    <i class="fa fa-github" aria-hidden="true" style="font-size: 24px; color: #4fbfa8; flex-shrink: 0; margin-top: 2px;"></i>
+                                    <h3 class="heading mb-0 text-400" style="color: #4fbfa8; font-size: 1.25rem; margin: 0; word-break: break-word; text-align: left;">
+                                        ${repo.name}
+                                    </h3>
+                                </div>
+                                <span style="color: #888; font-size: 0.9em; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; margin-top: 4px;">
+                                    <i class="fa fa-star"></i> ${repo.stargazers_count}
+                                </span>
                             </div>
-                        </div>
+                            <p class="description text-justify" style="color: var(--text-secondary, #666); margin: 0;">${repo.description || 'No description available.'}</p>
+                        </a>
                     `;
                     humanProjectsGrid.appendChild(card);
                 }

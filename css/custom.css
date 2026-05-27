@@ -13,13 +13,18 @@ html.dark-theme body {
     color: #e0e0e0 !important;
 }
 
-html.dark-theme .bg-gray, html.dark-theme .bg-gradient {
-    background-color: #111 !important;
-    background: #111 !important;
+html.dark-theme .bg-gray, 
+html.dark-theme .about-section, 
+html.dark-theme .projects-section {
+    background-color: #000 !important;
+    background: #000 !important;
 }
 
-html.dark-theme .about-section, html.dark-theme .contact-section, html.dark-theme .services-section {
-    background-color: #000 !important;
+html.dark-theme .bg-gradient, 
+html.dark-theme .services-section, 
+html.dark-theme .contact-section {
+    background-color: #111 !important;
+    background: #111 !important;
 }
 
 html.dark-theme h1, html.dark-theme h2, html.dark-theme h3, html.dark-theme h4, html.dark-theme h5, html.dark-theme h6 {
@@ -57,9 +62,24 @@ html.dark-theme .btn-outline-primary:hover, html.dark-theme .btn-outline-light:h
     color: #000 !important;
 }
 
+.card {
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
 html.dark-theme .card {
     background: #111 !important;
-    border-color: #333 !important;
+    border: 1px solid #4fbfa8 !important;
+    box-shadow: 0 0 15px rgba(79, 191, 168, 0.15) !important;
+}
+
+html.dark-theme .card:hover {
+    box-shadow: 0 0 25px rgba(79, 191, 168, 0.35) !important;
 }
 
 html.dark-theme .card-footer {
@@ -166,3 +186,11 @@ html.dark-theme .theme-option:hover {
     font-weight: bold;
 }
 html { scroll-behavior: smooth; }
+
+.human-see-more:hover {
+    color: #38a38d !important;
+    text-decoration: underline !important;
+}
+html.dark-theme .human-see-more:hover {
+    color: #74cdba !important;
+}

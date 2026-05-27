@@ -66,10 +66,20 @@ html.dark-theme .card-footer {
     border-top: 1px solid #333 !important;
 }
 
-html.dark-theme .form-control {
-    background-color: #111 !important;
+/* Ensure all inputs and textareas have dark backgrounds in dark mode for BOTH themes */
+html.dark-theme input, 
+html.dark-theme textarea, 
+html.dark-theme .form-control,
+html.dark-theme .contact-section .form-control {
+    background-color: #1a1a1a !important;
     border-color: #333 !important;
     color: #fff !important;
+}
+
+html.dark-theme input::placeholder, 
+html.dark-theme textarea::placeholder, 
+html.dark-theme .form-control::placeholder {
+    color: #888 !important;
 }
 
 html.dark-theme .icon i {

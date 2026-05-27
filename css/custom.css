@@ -7,3 +7,152 @@ a.instagram,a.email {
 .about-section .progress .progress-bar-skill5 {
     background: #4fbfa8;
 }
+/* Dark Mode for Human Theme */
+html.dark-theme body {
+    background-color: #000 !important;
+    color: #e0e0e0 !important;
+}
+
+html.dark-theme .bg-gray, html.dark-theme .bg-gradient {
+    background-color: #111 !important;
+    background: #111 !important;
+}
+
+html.dark-theme .about-section, html.dark-theme .contact-section, html.dark-theme .services-section {
+    background-color: #000 !important;
+}
+
+html.dark-theme h1, html.dark-theme h2, html.dark-theme h3, html.dark-theme h4, html.dark-theme h5, html.dark-theme h6 {
+    color: #4fbfa8 !important;
+}
+
+html.dark-theme .navbar {
+    background-color: #000 !important;
+    border-bottom: 1px solid #333 !important;
+}
+
+html.dark-theme .navbar .nav-link {
+    color: #ccc !important;
+}
+
+html.dark-theme .navbar .nav-link.active, html.dark-theme .navbar .nav-link:hover {
+    color: #4fbfa8 !important;
+}
+
+html.dark-theme .progress-title {
+    color: #4fbfa8 !important;
+}
+
+html.dark-theme .progress-bar {
+    background-color: #4fbfa8 !important;
+}
+
+html.dark-theme .btn-outline-primary, html.dark-theme .btn-outline-light {
+    border-color: #4fbfa8 !important;
+    color: #4fbfa8 !important;
+}
+
+html.dark-theme .btn-outline-primary:hover, html.dark-theme .btn-outline-light:hover {
+    background-color: #4fbfa8 !important;
+    color: #000 !important;
+}
+
+html.dark-theme .card {
+    background: #111 !important;
+    border-color: #333 !important;
+}
+
+html.dark-theme .card-footer {
+    border-top: 1px solid #333 !important;
+}
+
+html.dark-theme .form-control {
+    background-color: #111 !important;
+    border-color: #333 !important;
+    color: #fff !important;
+}
+
+html.dark-theme .icon i {
+    color: #4fbfa8 !important;
+}
+
+html.dark-theme .main-footer {
+    background: #111 !important;
+    color: #ccc !important;
+}
+
+html.dark-theme a.external, html.dark-theme a.email, html.dark-theme a.github {
+    color: #4fbfa8 !important;
+}
+
+/* Custom Dropdown Styling */
+.theme-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.theme-dropdown-btn {
+    background: transparent;
+    border: 1px solid #4fbfa8;
+    color: #4fbfa8;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-dropdown-btn:hover {
+    background: rgba(79, 191, 168, 0.1);
+}
+
+.theme-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10000;
+    right: 0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+html.dark-theme .theme-dropdown-content {
+    background-color: #1a1a1a;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+}
+
+.theme-option {
+    color: #333;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+html.dark-theme .theme-option {
+    color: #ccc;
+}
+
+.theme-option:hover {
+    background-color: #f1f1f1;
+}
+
+html.dark-theme .theme-option:hover {
+    background-color: #333;
+}
+
+.theme-tag {
+    background: #4fbfa8;
+    color: #000;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+html { scroll-behavior: smooth; }

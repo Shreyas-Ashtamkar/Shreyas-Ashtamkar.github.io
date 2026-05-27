@@ -4,23 +4,13 @@ $(function () {
      * Preventing URL update on navigation link click
      *  ==============================================*/
 
-    $('.link-scroll').on('click', function (e) {
-        var anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $(anchor.attr('href')).offset().top
-        }, 1000);
-        e.preventDefault();
-    });
-
+    // Handled in app.js now
 
     /* =========================================
      *  Scroll Spy
      *  =======================================*/
 
-    $('body').scrollspy({
-        target: '#navbarcollapse',
-        offset: 80
-    });
+    // Handled in app.js now
 
 
     /* =========================================

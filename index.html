@@ -1,47 +1,338 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shreyas Ashtamkar | Software Engineer | Problem Solver</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="all,follow">
-
-    <!--open graph description   -->
+    <meta name="description" content="Portfolio of Shreyas Ashtamkar, Software Engineer and Problem Solver">
+    
+    <!-- Open Graph -->
     <meta property="og:title" content="Shreyas Ashtamkar | Portfolio">
     <meta property="og:description" content="I am Shreyas Ashtamkar, and this website is my Web-Portfolio.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://shreyas-ashtamkar.github.io/">
-    <meta property="og:image" content="https://shreyas-ashtamkar.github.io/favicon.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="666">
-    <meta property="og:image:height" content="666">
+    <meta property="og:image" content="https://shreyas-ashtamkar.github.io/img/dp-main.png">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
-    <!-- Google fonts - Roboto + Roboto Slab -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700%7CRoboto:400,700,300">
-    <!-- owl carousel -->
-    <link rel="stylesheet" href="vendor/owl.carousel/assets/owl.carousel.css">
-    <link rel="stylesheet" href="vendor/owl.carousel/assets/owl.theme.default.css">
-    <!-- animate.css -->
-    <link rel="stylesheet" href="vendor/animate.css/animate.css">
-    <!-- theme stylesheet -->
-    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
-    <!-- Custom stylesheet - for your changes -->
-    <link rel="stylesheet" href="css/custom.css">
-    <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.png">
-    <!-- Tweaks for older IEs --><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif] -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4fbfa8">
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-    <script type="text/javascript" src="js/custom.js"></script>
-  </head>
-  <body>
+
+    <!-- Dynamic Theme Asset Loader -->
+    <script>
+        const theme = localStorage.getItem('portfolio-theme') || 'human';
+        if (theme === 'ai') {
+            document.write('<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Fira+Code&display=swap" rel="stylesheet">');
+            document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">');
+            document.write('<link rel="stylesheet" href="css/modern.css">');
+            document.write('<style>.theme-root { display: none; } #ai-theme-root { display: block; }</style>');
+        } else {
+            document.write('<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">');
+            document.write('<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">');
+            document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700%7CRoboto:400,700,300">');
+            document.write('<link rel="stylesheet" href="vendor/owl.carousel/assets/owl.carousel.css">');
+            document.write('<link rel="stylesheet" href="vendor/owl.carousel/assets/owl.theme.default.css">');
+            document.write('<link rel="stylesheet" href="vendor/animate.css/animate.css">');
+            document.write('<link rel="stylesheet" href="css/style.default.css">');
+            document.write('<link rel="stylesheet" href="css/custom.css">');
+            document.write('<style>.theme-root { display: none; } #human-theme-root { display: block; }</style>');
+        }
+    </script>
+
+    <style>
+        /* Custom Dropdown Styling */
+        .theme-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .theme-dropdown-btn {
+            background: transparent;
+            border: 1px solid #4fbfa8;
+            color: #4fbfa8;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+        .theme-dropdown-btn:hover {
+            background: rgba(79, 191, 168, 0.1);
+        }
+        .theme-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10000;
+            right: 0;
+            border-radius: 4px;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+        html.dark-theme .theme-dropdown-content {
+            background-color: #1a1a1a;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
+        }
+        .theme-option {
+            color: #333;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        html.dark-theme .theme-option {
+            color: #ccc;
+        }
+        .theme-option:hover {
+            background-color: #f1f1f1;
+        }
+        html.dark-theme .theme-option:hover {
+            background-color: #333;
+        }
+        .theme-tag {
+            background: #4fbfa8;
+            color: #000;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .dark-mode-toggle {
+            background: transparent;
+            border: none;
+            color: #4fbfa8;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .dark-mode-toggle:hover {
+            color: #74cdba;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="ai-theme-root" class="theme-root">
+        
+
+    <!-- Header / Navbar -->
+    <header>
+        <nav>
+            <a href="#hero" class="logo gradient-text"><strong>Shreyas A.</strong></a>
+            <ul class="nav-links">
+                <li><a href="#hero">Intro</a></li>
+                <li><a href="#ai-about">About</a></li>
+                <li><a href="#ai-services">Work</a></li>
+                <li><a href="#ai-projects">Projects</a></li>
+                <li><a href="#ai-contact">Contact</a></li>
+                
+                
+                <!-- Theme Dropdown -->
+                <li style="display: flex; align-items: center; margin-right: 15px;">
+                  <div class="theme-dropdown-container">
+                      <button class="theme-dropdown-btn">
+                          <i class="fas fa-robot"></i> AI Theme <i class="fas fa-caret-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                      </button>
+                      <div class="theme-dropdown-content">
+                          <div class="theme-option" data-theme="human">
+                              <span>My Theme</span>
+                              <span class="theme-tag" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; border-radius: 50%; overflow: hidden; background: transparent;"><img src="img/dp-main.png" alt="Me" style="width: 100%; height: 100%; object-fit: cover;"></span>
+                          </div>
+                          <div class="theme-option" data-theme="ai">
+                              <span>AI Theme</span>
+                              <span class="theme-tag" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; border-radius: 50%;"><i class="fas fa-robot" style="font-size: 0.8rem;"></i></span>
+                          </div>
+                      </div>
+                  </div>
+                </li>
+
+<li><button class="dark-mode-toggle theme-toggle-btn" aria-label="Toggle dark/light theme"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content animate-on-scroll">
+            <img src="img/dp-main.png" alt="Shreyas Ashtamkar" class="profile-img">
+            <h1><span class="gradient-text">Greetings, नमस्कार!</span></h1>
+            <p style="font-size: 1.2rem; max-width: 650px; color: var(--text-secondary);">
+                As a Computer Engineer, I thrive in the realms of Python, C/C++, Java, and Javascript development, crafting solutions that bridge innovation with technology.
+            </p>
+            <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                <a href="#ai-projects" class="glass" style="padding: 0.8rem 2rem; border-radius: 8px;">View Work</a>
+                <a href="#ai-contact" class="glass" style="padding: 0.8rem 2rem; border-radius: 8px; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); color: #000; font-weight: 600;">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Skills Section -->
+    <section id="ai-about">
+        <h2 class="gradient-text animate-on-scroll" style="font-size: 3rem; margin-bottom: 4rem;">About Me</h2>
+        <div class="about-grid">
+            <div class="about-text animate-on-scroll glass" style="padding: 2.5rem;">
+                <h3 style="margin-bottom: 1.5rem; color: var(--accent-primary);"><i class="fas fa-terminal"></i> What do I do?</h3>
+                <p style="margin-bottom: 1rem;">I have valuable experience in the software industry, accumulating multiple years of professional expertise across various roles. Based in Pune, Maharashtra, India, I am a dedicated and versatile professional with a keen interest in programming.</p>
+                <p style="margin-bottom: 1rem;">Proficient in crafting elegant and efficient Pythonic code, I've worked with a spectrum of frameworks, including Brython (browser Python), RESTful frameworks like Flask, and comprehensive all-in-one frameworks like Django.</p>
+                <p>I hold a Masters in Software Systems from BITS Pilani and currently work as an AI Engineer Intern, specializing in creating agentic pipelines using LangChain and LangGraph.</p>
+            </div>
+            
+            <div id="skills" class="skills-container animate-on-scroll glass" style="padding: 2.5rem;">
+                <h3 style="margin-bottom: 1.5rem; color: var(--accent-secondary);"><i class="fas fa-code-branch"></i> What do I know?</h3>
+                
+                <div class="skill-item">
+                    <div class="skill-info"><span>Python (Scripting/Web Backend Dev/Data Science)</span><span>95%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>Web Development</span><span>87%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="87%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>Java (Core/Android/Pega)</span><span>74%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="74%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>Agents (LangChain/Graph)</span><span>67%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="67%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>Prompt Engineering</span><span>57%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="57%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>LLM Finetuning</span><span>46%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="46%"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-info"><span>C++ (Embedded/Game Dev)</span><span>40%</span></div>
+                    <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="40%"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Services Section (Restored) -->
+    <section id="ai-services">
+        <h2 class="gradient-text animate-on-scroll" style="font-size: 3rem; margin-bottom: 4rem; text-align: center;">Technical Capabilities</h2>
+        <div class="projects-grid">
+            <div class="glass animate-on-scroll" style="padding: 2rem; text-align: center;">
+                <i class="fas fa-comments" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Technical Consulting</h3>
+                <p style="color: var(--text-secondary);">I possess expertise in a diverse range of technologies, excelling in addressing technical challenges. My skills extend to providing guidance on transforming ideas into tangible solutions, configuring systems, and resolving glitches.</p>
+            </div>
+            <div class="glass animate-on-scroll" style="padding: 2rem; text-align: center;">
+                <i class="fas fa-code" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Algorithms Building</h3>
+                <p style="color: var(--text-secondary);">I specialize in crafting efficient algorithms tailored for both individual and collaborative projects. These algorithms are designed to function autonomously or seamlessly integrate into larger systems.</p>
+            </div>
+            <div class="glass animate-on-scroll" style="padding: 2rem; text-align: center;">
+                <i class="fas fa-desktop" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Frontend Development</h3>
+                <p style="color: var(--text-secondary);">Proficient in Python and C++ GUI frameworks, as well as web frontend frameworks like React and Angular, I specialize in delivering sleek, fast-loading user interfaces.</p>
+            </div>
+            <div class="glass animate-on-scroll" style="padding: 2rem; text-align: center;">
+                <i class="fas fa-database" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Backend Development</h3>
+                <p style="color: var(--text-secondary);">Specializing in Python backend technologies such as Django and Flask, I am adept with Linux Nginx Servers, Ngrok, and Gunicorn WSGI Handlers.</p>
+            </div>
+            <div class="glass animate-on-scroll" style="padding: 2rem; text-align: center;">
+                <i class="fab fa-android" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Android Development</h3>
+                <p style="color: var(--text-secondary);">Bringing practical expertise to app development, I excel in utilizing professional tools such as Android Studio and Flutter.</p>
+            </div>
+            <div class="glass animate-on-scroll" style="padding: 2rem; text-align: center;">
+                <i class="fab fa-linux" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Linux Expertise</h3>
+                <p style="color: var(--text-secondary);">Navigating the Linux landscape, I possess a robust understanding of system configurations, applications, libraries, and adept troubleshooting skills.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="ai-projects">
+        <h2 class="gradient-text animate-on-scroll" style="font-size: 3rem; margin-bottom: 1.5rem;">Latest Work</h2>
+        <p class="animate-on-scroll" style="color: var(--text-secondary); text-align: center; max-width: 600px; margin: 0 auto 3rem auto; font-size: 1.1rem;">
+            Here are some of my recent open-source projects and experiments fetched dynamically from GitHub.
+        </p>
+        <div id="projects-grid" class="projects-grid">
+            <div style="text-align: center; width: 100%; grid-column: 1 / -1;">
+                <i class="fas fa-circle-notch fa-spin" style="font-size: 2.5rem; color: var(--accent-primary);"></i>
+                <p style="margin-top: 1rem; color: var(--text-secondary);">Loading projects from GitHub...</p>
+            </div>
+        </div>
+        
+        <div class="animate-on-scroll" style="margin-top: 3rem;">
+            <a href="https://github.com/Shreyas-Ashtamkar" target="_blank" class="glass" style="padding: 0.8rem 2rem; border-radius: 8px;">View All on GitHub <i class="fas fa-external-link-alt" style="margin-left: 0.5rem; font-size: 0.8em;"></i></a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="ai-contact">
+        <h2 class="gradient-text animate-on-scroll" style="font-size: 3rem; margin-bottom: 1rem;">Let's Connect</h2>
+        <p class="animate-on-scroll" style="color: var(--text-secondary); font-size: 1.1rem; text-align: center;">Keen on exploring additional details or engaging in a thoughtful conversation?</p>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between; align-items: stretch; width: 100%; max-width: 1200px; margin: 3rem auto 0 auto;">
+            <!-- Contact Form -->
+            <div style="flex: 1 1 500px; display: flex; flex-direction: column;">
+                <form id="contact-form" class="contact-form glass animate-on-scroll" action="mailto:shreyu@programmer.net" method="POST" enctype="text/plain" style="flex: 1; margin: 0; max-width: none; width: 100%;">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Your Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="How can I help you?"></textarea>
+                    </div>
+                    <button type="submit">Send Message <i class="fas fa-paper-plane" style="margin-left: 0.5rem;"></i></button>
+                </form>
+            </div>
+            
+            <!-- Map -->
+            <div class="animate-on-scroll" style="flex: 1 1 500px; display: flex; flex-direction: column;">
+                <div class="glass" style="width: 100%; height: 100%; min-height: 400px; border-radius: var(--border-radius); overflow: hidden; border: 1px solid var(--border-color); padding: 0;">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src="https://www.openstreetmap.org/export/embed.html?bbox=73.7662947178%2C18.6017570111%2C73.7810575960%2C18.6185339566&amp;layer=mapnik&amp;marker=18.6092750%2C73.7729374"
+                      style="border: none; filter: var(--map-filter, none); min-height: 400px;"
+                    >
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/Shreyas-Ashtamkar" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/shreyas-ashtamkar/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/shreyu.ashtamkar/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="mailto:shreyu@programmer.net" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">© 2026 Shreyas Ashtamkar. All rights reserved.</p>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">Mathematically crafted by a Friendly AI.</p>
+    </footer>
+
+
+    </div>
+
+    <div id="human-theme-root" class="theme-root">
+        
     <!-- Reference item -->
     <!-- navbar -->
     <header class="header">
@@ -53,7 +344,34 @@
               <li class="nav-item"><a href="#intro" class="nav-link link-scroll">Intro</a></li>
               <li class="nav-item"><a href="#about" class="nav-link link-scroll">About</a></li>
               <li class="nav-item"><a href="#services" class="nav-link link-scroll">Work</a></li>
+              <li class="nav-item"><a href="#projects" class="nav-link link-scroll">Projects</a></li>
               <li class="nav-item"><a href="#contact" class="nav-link link-scroll">Contact</a></li>
+              
+              <!-- Theme Dropdown -->
+              <li class="nav-item" style="display: flex; align-items: center; margin-left: 10px;">
+                  <div class="theme-dropdown-container">
+                      <button class="theme-dropdown-btn" style="display: inline-flex; align-items: center; gap: 8px;">
+                          <span style="display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; overflow: hidden; background: transparent; flex-shrink: 0;"><img src="img/dp-main.png" alt="Me" style="width: 100%; height: 100%; object-fit: cover;"></span> My Theme <i class="fa fa-caret-down" style="font-size: 0.8rem; margin-left: 4px;"></i>
+                      </button>
+                      <div class="theme-dropdown-content">
+                          <div class="theme-option" data-theme="human">
+                              <span>My Theme</span>
+                              <span class="theme-tag" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; border-radius: 50%; overflow: hidden; background: transparent;"><img src="img/dp-main.png" alt="Me" style="width: 100%; height: 100%; object-fit: cover;"></span>
+                          </div>
+                          <div class="theme-option" data-theme="ai">
+                              <span>AI Theme</span>
+                              <span class="theme-tag" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; border-radius: 50%;"><i class="fa fa-android" style="font-size: 0.8rem;"></i></span>
+                          </div>
+                      </div>
+                  </div>
+              </li>
+
+              <!-- Dark Mode Toggle -->
+              <li class="nav-item" style="display: flex; align-items: center; margin-left: 10px;">
+                  <button class="dark-mode-toggle" aria-label="Toggle dark/light theme"><i class="fa fa-moon-o"></i></button>
+              </li>
+
+
             </ul>
           </div>
         </div>
@@ -194,8 +512,31 @@
       </div>
     </section>
     
+    
+    <!-- Projects Section -->
+    <section id="projects" class="bg-gray projects-section pb-5 pt-5">
+      <div class="container">
+        <header class="text-center mb-5">
+          <h2 class="title" style="margin-bottom: 0;">Projects</h2>
+        </header>
+        <div id="human-projects-grid" class="row">
+          <div class="col-12 text-center">
+             <i class="fa fa-spinner fa-spin fa-3x" style="color: #4fbfa8;"></i>
+             <p class="mt-3">Loading projects from GitHub...</p>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-12 text-center">
+            <a href="https://github.com/Shreyas-Ashtamkar" target="_blank" class="human-see-more" style="color: #4fbfa8; font-weight: 600; text-decoration: none; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;">
+              See more... <i class="fa fa-external-link" aria-hidden="true" style="font-size: 0.9em;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact -->
-    <section id="contact" data-animate="fadeIn" class="contact-section contact bg-gray">
+    <section id="contact" data-animate="fadeIn" class="contact-section contact bg-gradient">
       <div class="container">
         <header class="text-center">
           <h2 class="title">Contact me</h2>
@@ -222,7 +563,7 @@
                     <textarea id="message" name="message" placeholder="Message for me *" rows="4" required="required" aria-label="Message" class="form-control"></textarea>
                   </div>
                   <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-outline-primary" id='contact-form-submit'>Send Message</button>
+                    <button type="submit" class="btn btn-outline-light" id='contact-form-submit'>Send Message</button>
                   </div>
                 </div>
               </div>
@@ -290,11 +631,28 @@
     </footer>
 
     <!-- JavaScript files -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/owl.carousel/owl.carousel.min.js"></script>
-    <script src="vendor/waypoints/lib/jquery.waypoints.min.js"></script>
-    <script src="vendor/jquery.counterup/jquery.counterup.js"></script>
-    <script src="js/front.js"></script>
-  </body>
+    
+    
+    
+    
+    
+    
+  
+    </div>
+
+    <script>
+        document.write('<script src="js/app.js"><\/script>');
+        if (theme !== 'ai') {
+            document.write('<script src="vendor/jquery/jquery.min.js"><\/script>');
+            document.write('<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"><\/script>');
+            document.write('<script src="vendor/owl.carousel/owl.carousel.min.js"><\/script>');
+            document.write('<script src="vendor/waypoints/lib/jquery.waypoints.min.js"><\/script>');
+            document.write('<script src="vendor/jquery.counterup/jquery.counterup.js"><\/script>');
+            document.write('<script src="js/front.js"><\/script>');
+            document.write('<script src="js/custom.js"><\/script>');
+        }
+
+        // DOM loaded logic handled in app.js
+    </script>
+</body>
 </html>

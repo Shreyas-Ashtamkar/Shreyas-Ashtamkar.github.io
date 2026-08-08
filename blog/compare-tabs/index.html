@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xiaomi Pad — Base Model Comparison</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  :root{
+    --orange:#FF6900;
+    --black:#0A0A0A;
+    --ink:#1A1A1A;
+    --paper:#F5F5F0;
+    --grey:#8A8A85;
+    --up:#1B8A5A;
+    --down:#C4331F;
+    --flat:#8A8A85;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--black);
+    color:var(--paper);
+    font-family:'Helvetica Neue',Arial,sans-serif;
+    padding:0 0 4rem;
+  }
+  .band{
+    background:var(--orange);
+    color:var(--black);
+    padding:2.5rem 1.5rem 2rem;
+  }
+  .band-inner{max-width:1100px;margin:0 auto;}
+  .eyebrow{
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    opacity:.75;
+  }
+  h1{
+    font-size:2.4rem;
+    font-weight:800;
+    letter-spacing:-.02em;
+    margin-top:.3rem;
+  }
+  .sub{font-size:.95rem;font-weight:500;opacity:.8;margin-top:.4rem;max-width:640px;}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+
+  .brand-group{margin-bottom:1.1rem;}
+  .brand-label{
+    font-size:.68rem;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin-bottom:.5rem;
+    padding-left:.1rem;
+  }
+  .xiaomi-label{color:var(--orange);}
+  .apple-label{color:#C8C8C8;}
+  .samsung-label{color:#7C8FFF;}
+  .selector{
+    display:flex;
+    gap:.5rem;
+    flex-wrap:wrap;
+  }
+  .chip{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    background:var(--ink);
+    border:1px solid #333;
+    border-radius:999px;
+    padding:.55rem 1rem .55rem .7rem;
+    cursor:pointer;
+    user-select:none;
+    transition:border-color .15s;
+    font-size:.85rem;
+    font-weight:600;
+  }
+  .chip:hover{border-color:var(--orange);}
+  .chip input{accent-color:var(--orange);width:16px;height:16px;cursor:pointer;}
+  .chip .tag{
+    font-size:.65rem;
+    padding:.12rem .4rem;
+    border-radius:4px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    font-weight:800;
+  }
+  .tag.released{background:var(--orange);color:var(--black);}
+  .tag.rumor{background:#333;color:#FFB877;border:1px solid #FFB877;}
+  .tag.apple{background:#E8E8E8;color:#000;}
+  .tag.samsung{background:#1428A0;color:#fff;}
+
+  .table-scroll{overflow-x:auto;border:1px solid #2A2A2A;border-radius:8px;}
+  table{width:100%;border-collapse:collapse;min-width:640px;}
+  th,td{text-align:left;padding:.85rem 1rem;border-bottom:1px solid #232323;font-size:.88rem;}
+  th{white-space:nowrap;}
+  thead th{
+    background:var(--ink);
+    font-size:.7rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--grey);
+  }
+  thead th.model{color:var(--paper);font-size:.95rem;text-transform:none;letter-spacing:0;}
+  tbody tr:hover{background:#141414;}
+  td.feature-label{color:var(--grey);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;}
+  td{white-space:normal;}
+  .val{font-weight:600;display:block;}
+  .score{
+    display:inline-block;
+    margin-top:.25rem;
+    font-size:.7rem;
+    color:var(--grey);
+    font-weight:600;
+  }
+  .delta{
+    display:inline-block;
+    margin-left:.4rem;
+    margin-top:.25rem;
+    font-size:.72rem;
+    font-weight:800;
+    padding:.1rem .4rem;
+    border-radius:4px;
+  }
+  .delta.up{color:var(--up);background:#1B8A5A22;}
+  .delta.down{color:var(--down);background:#C4331F22;}
+  .delta.flat{color:var(--flat);background:#8A8A8522;}
+  .rumor-val{color:#FFB877;font-style:italic;}
+
+  .chart-section{margin-top:3rem;}
+  h2{font-size:1.3rem;font-weight:800;margin-bottom:.3rem;}
+  .chart-controls{display:flex;gap:.5rem;margin:1rem 0 1.4rem;flex-wrap:wrap;}
+  .metric-btn{
+    background:var(--ink);
+    border:1px solid #333;
+    color:var(--paper);
+    padding:.5rem 1rem;
+    border-radius:6px;
+    font-size:.8rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .metric-btn.active{background:var(--orange);color:var(--black);border-color:var(--orange);}
+  .chart-box{
+    background:var(--ink);
+    border:1px solid #2A2A2A;
+    border-radius:8px;
+    padding:1.5rem 1rem;
+    height:360px;
+  }
+
+  .verdict{margin-top:3rem;border-left:3px solid var(--orange);padding:0 0 0 1.3rem;}
+  .verdict p{color:#C8C8C0;font-size:.92rem;margin-bottom:.9rem;line-height:1.65;}
+  .verdict strong{color:var(--orange);}
+
+  footer{max-width:1100px;margin:2.5rem auto 0;padding:0 1.5rem;font-size:.72rem;color:#666;}
+
+  @media(max-width:640px){
+    h1{font-size:1.7rem;}
+    .chart-box{height:300px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="band">
+  <div class="band-inner">
+    <div class="eyebrow">Base Models Only · No Pro / Ultra Variants</div>
+    <h1>Base Tablets, 2021 to Now</h1>
+    <p class="sub">Every base/vanilla-tier tablet from Xiaomi, Apple, and Samsung since 2021. Toggle any subset below.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="brand-group">
+    <div class="brand-label xiaomi-label">Xiaomi</div>
+    <div class="selector">
+      <label class="chip"><input type="checkbox" value="p5" checked> Pad 5 <span class="tag released">2021</span></label>
+      <label class="chip"><input type="checkbox" value="p6" checked> Pad 6 <span class="tag released">2023</span></label>
+      <label class="chip"><input type="checkbox" value="p7" checked> Pad 7 <span class="tag released">2025</span></label>
+      <label class="chip"><input type="checkbox" value="p8" checked> Pad 8 <span class="tag released">2026</span></label>
+      <label class="chip"><input type="checkbox" value="p9" checked> Pad 9 <span class="tag rumor">Rumor</span></label>
+    </div>
+  </div>
+  <div class="brand-group">
+    <div class="brand-label apple-label">Apple</div>
+    <div class="selector">
+      <label class="chip"><input type="checkbox" value="ipad9" checked> iPad 9 <span class="tag apple">2021</span></label>
+      <label class="chip"><input type="checkbox" value="ipad10" checked> iPad 10 <span class="tag apple">2022</span></label>
+      <label class="chip"><input type="checkbox" value="ipad11" checked> iPad 11 <span class="tag apple">2025</span></label>
+    </div>
+  </div>
+  <div class="brand-group">
+    <div class="brand-label samsung-label">Samsung</div>
+    <div class="selector">
+      <label class="chip"><input type="checkbox" value="tabs7" checked> Tab S7 <span class="tag samsung">2020/21</span></label>
+      <label class="chip"><input type="checkbox" value="tabs8" checked> Tab S8 <span class="tag samsung">2022</span></label>
+      <label class="chip"><input type="checkbox" value="tabs9" checked> Tab S9 <span class="tag samsung">2023</span></label>
+      <label class="chip"><input type="checkbox" value="tabs11" checked> Tab S11 <span class="tag samsung">2025</span></label>
+    </div>
+  </div>
+  <p style="font-size:.75rem;color:#777;margin:.5rem 0 1.5rem;">All entries are base/vanilla models — no Pro, Ultra, Air, Plus, or FE variants. Samsung skipped a base Tab S10 (Plus/Ultra/FE only that year).</p>
+
+  <div class="table-scroll">
+    <table id="specTable">
+      <thead><tr id="headerRow"></tr></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <p style="font-size:.78rem;color:#777;margin-top:.7rem;">Each row scores 1–10 (subjective, weighing raw spec against era-adjusted competitiveness). ▲/▼ show the change vs. the previous selected generation.</p>
+
+  <div class="chart-section">
+    <h2>Spec Trajectory</h2>
+    <p class="sub" style="color:#999;">Pick a metric to plot it across generations.</p>
+    <div class="chart-controls" id="metricControls"></div>
+    <div class="chart-box"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <div class="verdict">
+    <p><strong>Samsung's inflection was 2023, not incremental.</strong> Tab S9 made AMOLED standard on the base model — jumping display score from 6 to 9 in one generation — and never went back. Xiaomi still hasn't made that jump on any base Pad since 2021.</p>
+    <p><strong>Apple's inflection was chip, not price.</strong> A13→A14→A16 across iPad 9/10/11 is a real climb (6→7→8.5), while price actually dropped back to $349 by 2025 after briefly spiking to $449 with the 10th gen redesign. Apple protected value on the base tier hardest of the three.</p>
+    <p><strong>Xiaomi is the only brand with a flat display line for 4+ years straight.</strong> RAM and battery moved, chipset moved modestly, but panel tech (IPS, no OLED) hasn't changed since Pad 5. That's the specific place competitors pulled ahead.</p>
+    <p><strong>All three brands avoided regression</strong> — nobody shipped a worse spec than their prior gen on paper. The competitive gap is about which dimension each brand chose to leave alone.</p>
+  </div>
+
+</div>
+
+<footer>Pad 9 specs are unconfirmed leaks (as of Aug 2026) — flagged in orange throughout. Base/vanilla models only; Pro and Ultra variants excluded for a fair line-to-line comparison.</footer>
+
+<script>
+// Every feature carries a numeric "score" (1-10) alongside its display text,
+// so deltas can be computed and shown even for non-numeric specs like chipset or stylus.
+const DATA = {
+  p5: { name:"Pad 5", year:"2021", sortYear:2021, released:true, brand:"xiaomi",
+    display:"11\" IPS · 120Hz", displayScore:6,
+    chipset:"Snapdragon 860", chipScore:6,
+    ramMax:8, ramScore:5,
+    battery:8720, batteryScore:6,
+    charging:22, chargingScore:3,
+    speakers:4, speakerScore:7,
+    stylus:"Xiaomi Smart Pen", stylusScore:6,
+    price:"Sub-flagship value shock", priceScore:9
+  },
+  p6: { name:"Pad 6", year:"2023", sortYear:2023, released:true, brand:"xiaomi",
+    display:"11\" IPS · 144Hz", displayScore:7,
+    chipset:"Snapdragon 870", chipScore:6.5,
+    ramMax:8, ramScore:5,
+    battery:8840, batteryScore:6.2,
+    charging:33, chargingScore:5,
+    speakers:4, speakerScore:7,
+    stylus:"Xiaomi Smart Pen", stylusScore:6,
+    price:"Same formula, faster panel", priceScore:6
+  },
+  p7: { name:"Pad 7", year:"2025", sortYear:2025.1, released:true, brand:"xiaomi",
+    display:"11.2\" IPS · 144Hz", displayScore:7.2,
+    chipset:"Snapdragon 8s Gen 3", chipScore:7.5,
+    ramMax:12, ramScore:7,
+    battery:8850, batteryScore:6.3,
+    charging:33, chargingScore:5,
+    speakers:4, speakerScore:7,
+    stylus:"Xiaomi Focus Pen", stylusScore:7.5,
+    price:"Meaningful chip jump", priceScore:7
+  },
+  p8: { name:"Pad 8", year:"2026", sortYear:2026.1, released:true, brand:"xiaomi",
+    display:"11.5\" IPS · 120Hz", displayScore:6.8,
+    chipset:"Snapdragon 8s Gen 4", chipScore:8,
+    ramMax:12, ramScore:7,
+    battery:9200, batteryScore:6.8,
+    charging:45, chargingScore:6.5,
+    speakers:4, speakerScore:7,
+    stylus:"Xiaomi Smart Pen 2", stylusScore:8,
+    price:"Incremental, crowded market", priceScore:5
+  },
+  p9: { name:"Pad 9", year:"2026*", sortYear:2026.8, released:false, brand:"xiaomi",
+    display:"11.5\" IPS · 120Hz*", displayScore:6.8,
+    chipset:"Snapdragon 8s Gen 4/5*", chipScore:8.3,
+    ramMax:12, ramScore:7,
+    battery:9720, batteryScore:7.5,
+    charging:67, chargingScore:8,
+    speakers:4, speakerScore:7,
+    stylus:"Xiaomi Smart Pen 2*", stylusScore:8,
+    price:"Battery-first play*", priceScore:5.5
+  },
+  ipad9: { name:"iPad 9", year:"2021", sortYear:2021.7, released:true, brand:"apple",
+    display:"10.2\" IPS · 60Hz", displayScore:3.5,
+    chipset:"Apple A13", chipScore:6,
+    ramMax:3, ramScore:2,
+    battery:8557, batteryScore:5.5,
+    charging:12, chargingScore:1.5,
+    speakers:2, speakerScore:3.5,
+    stylus:"Apple Pencil (1st Gen)", stylusScore:5,
+    price:"$329 — cheapest way into iPad", priceScore:9
+  },
+  ipad10: { name:"iPad 10", year:"2022", sortYear:2022.8, released:true, brand:"apple",
+    display:"10.9\" IPS · 60Hz", displayScore:4.5,
+    chipset:"Apple A14", chipScore:7,
+    ramMax:4, ramScore:3,
+    battery:7606, batteryScore:5,
+    charging:20, chargingScore:2.5,
+    speakers:2, speakerScore:4,
+    stylus:"Apple Pencil (1st Gen, dongle)", stylusScore:4,
+    price:"$449 — redesign, price jump", priceScore:5.5
+  },
+  ipad11: { name:"iPad 11", year:"2025", sortYear:2025.2, released:true, brand:"apple",
+    display:"10.9\" IPS · 60Hz", displayScore:5,
+    chipset:"Apple A16", chipScore:8.5,
+    ramMax:6, ramScore:4,
+    battery:7698, batteryScore:5.5,
+    charging:20, chargingScore:2.5,
+    speakers:2, speakerScore:4,
+    stylus:"Apple Pencil (USB-C)", stylusScore:6.5,
+    price:"$349 — cheapest, best CPU/$", priceScore:9.5
+  },
+  tabs7: { name:"Tab S7", year:"2020/21", sortYear:2020.6, released:true, brand:"samsung",
+    display:"11\" LCD · 120Hz", displayScore:6,
+    chipset:"Snapdragon 865+", chipScore:7.5,
+    ramMax:8, ramScore:5,
+    battery:8000, batteryScore:6,
+    charging:45, chargingScore:6.5,
+    speakers:4, speakerScore:8,
+    stylus:"S Pen (bundled)", stylusScore:9,
+    price:"$649 — AMOLED-adjacent flagship", priceScore:6.5
+  },
+  tabs8: { name:"Tab S8", year:"2022", sortYear:2022.2, released:true, brand:"samsung",
+    display:"11\" LCD · 120Hz", displayScore:6,
+    chipset:"Snapdragon 8 Gen 1", chipScore:7.8,
+    ramMax:8, ramScore:5,
+    battery:8000, batteryScore:6,
+    charging:45, chargingScore:6.5,
+    speakers:4, speakerScore:8,
+    stylus:"S Pen (bundled)", stylusScore:9,
+    price:"$699 — still LCD, chip bump", priceScore:6
+  },
+  tabs9: { name:"Tab S9", year:"2023", sortYear:2023.6, released:true, brand:"samsung",
+    display:"11\" AMOLED · 120Hz", displayScore:9,
+    chipset:"Snapdragon 8 Gen 2", chipScore:8.5,
+    ramMax:12, ramScore:7,
+    battery:8400, batteryScore:6.5,
+    charging:45, chargingScore:6.5,
+    speakers:4, speakerScore:8,
+    stylus:"S Pen (bundled)", stylusScore:9,
+    price:"$799 — AMOLED becomes standard", priceScore:6.5
+  },
+  tabs11: { name:"Tab S11", year:"2025", sortYear:2025.7, released:true, brand:"samsung",
+    display:"11\" AMOLED · 120Hz", displayScore:9,
+    chipset:"MediaTek 9400+", chipScore:8.7,
+    ramMax:12, ramScore:7,
+    battery:8400, batteryScore:6.5,
+    charging:45, chargingScore:6.5,
+    speakers:4, speakerScore:7.5,
+    stylus:"S Pen (bundled)", stylusScore:9,
+    price:"$799 — AMOLED + S Pen included", priceScore:6.5
+  }
+};
+
+const ORDER = ["p5","p6","p7","p8","p9","ipad9","ipad10","ipad11","tabs7","tabs8","tabs9","tabs11"];
+
+// type:"num" = plot-able raw number (used in chart). scoreKey = 1-10 rating used for delta arrows on every row.
+const FEATURES = [
+  {key:"display", label:"Display", type:"text", scoreKey:"displayScore"},
+  {key:"chipset", label:"Chipset", type:"text", scoreKey:"chipScore"},
+  {key:"ramMax", label:"Max RAM", type:"num", unit:" GB", scoreKey:"ramScore"},
+  {key:"battery", label:"Battery", type:"num", unit:" mAh", scoreKey:"batteryScore"},
+  {key:"charging", label:"Charging", type:"num", unit:"W", scoreKey:"chargingScore"},
+  {key:"speakers", label:"Speakers", type:"num", unit:"", scoreKey:"speakerScore"},
+  {key:"stylus", label:"Stylus", type:"text", scoreKey:"stylusScore"},
+  {key:"price", label:"Positioning", type:"text", scoreKey:"priceScore"},
+];
+
+function getActive(){
+  return ORDER.filter(id => document.querySelector(`.chip input[value="${id}"]`).checked);
+}
+
+function deltaClass(curr, prev){
+  if(prev===undefined) return "flat";
+  if(curr>prev) return "up";
+  if(curr<prev) return "down";
+  return "flat";
+}
+function deltaSymbol(cls){
+  return cls==="up" ? "▲" : cls==="down" ? "▼" : "—";
+}
+
+function renderTable(){
+  const active = getActive();
+  const headerRow = document.getElementById("headerRow");
+  headerRow.innerHTML = `<th>Spec</th>` + active.map(id=>{
+    const d = DATA[id];
+    return `<th class="model">${d.name}<br><span style="font-size:.68rem;color:var(--grey);font-weight:500;">${d.year}</span></th>`;
+  }).join("");
+
+  const body = document.getElementById("tableBody");
+  body.innerHTML = FEATURES.map(f=>{
+    let cells = active.map((id,i)=>{
+      const d = DATA[id];
+      const rumor = !d.released;
+      let raw = d[f.key];
+      let display = f.type==="num" ? `${raw}${f.unit}` : raw;
+      let delta = "";
+      const score = d[f.scoreKey];
+      if(i>0){
+        const prevId = active[i-1];
+        const prevScore = DATA[prevId][f.scoreKey];
+        const cls = deltaClass(score, prevScore);
+        const diff = Math.round((score-prevScore)*10)/10;
+        if(cls!=="flat"){
+          delta = `<span class="delta ${cls}">${deltaSymbol(cls)} ${diff>0?'+':''}${diff}</span>`;
+        } else {
+          delta = `<span class="delta flat">—</span>`;
+        }
+      }
+      return `<td>
+        <span class="val ${rumor?'rumor-val':''}">${display}</span>
+        <span class="score">${score.toFixed(1)}/10</span>
+        ${delta}
+      </td>`;
+    }).join("");
+    return `<tr><td class="feature-label">${f.label}</td>${cells}</tr>`;
+  }).join("");
+}
+
+const METRICS = [
+  {key:"chipScore", label:"Chipset", unit:"/10", max:10},
+  {key:"displayScore", label:"Display", unit:"/10", max:10},
+  {key:"ramScore", label:"RAM", unit:"/10", max:10},
+  {key:"batteryScore", label:"Battery", unit:"/10", max:10},
+  {key:"chargingScore", label:"Charging", unit:"/10", max:10},
+  {key:"speakerScore", label:"Speakers", unit:"/10", max:10},
+  {key:"stylusScore", label:"Stylus", unit:"/10", max:10},
+  {key:"priceScore", label:"Positioning", unit:"/10", max:10},
+  {key:"ramMax", label:"Max RAM (raw)", unit:"GB", max:null},
+  {key:"battery", label:"Battery (raw)", unit:"mAh", max:null},
+  {key:"charging", label:"Charging (raw)", unit:"W", max:null},
+];
+let currentMetric = "chipScore";
+let chartInstance = null;
+
+function renderMetricButtons(){
+  const c = document.getElementById("metricControls");
+  c.innerHTML = METRICS.map(m=>`<button class="metric-btn ${m.key===currentMetric?'active':''}" data-key="${m.key}">${m.label}</button>`).join("");
+  c.querySelectorAll(".metric-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      currentMetric = btn.dataset.key;
+      renderMetricButtons();
+      renderChart();
+    });
+  });
+}
+
+function brandColor(id){
+  const d = DATA[id];
+  if(d.brand==="apple") return "#E8E8E8";
+  if(d.brand==="samsung") return "#1428A0";
+  return d.released ? "#FF6900" : "#3A3A3A";
+}
+
+function renderChart(){
+  const active = getActive().slice().sort((a,b) => DATA[a].sortYear - DATA[b].sortYear);
+  const metric = METRICS.find(m=>m.key===currentMetric);
+  const labels = active.map(id=>DATA[id].name);
+  const values = active.map(id=>DATA[id][currentMetric]);
+  const pointColors = active.map(id=>brandColor(id));
+  const pointBorders = active.map(id=>DATA[id].released ? brandColor(id) : "#FFB877");
+
+  if(chartInstance) chartInstance.destroy();
+  const ctx = document.getElementById("trendChart").getContext("2d");
+  chartInstance = new Chart(ctx, {
+    type:"line",
+    data:{
+      labels,
+      datasets:[{
+        label: metric.label,
+        data: values,
+        borderColor: "#FF6900",
+        backgroundColor: "#FF690022",
+        pointBackgroundColor: pointColors,
+        pointBorderColor: pointBorders,
+        pointRadius: 7,
+        pointHoverRadius: 9,
+        tension: 0.3,
+        borderWidth: 2
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{ callbacks:{ label: c => `${c.parsed.y} ${metric.unit}` } }
+      },
+      scales:{
+        x:{ ticks:{color:"#C8C8C0"}, grid:{color:"#232323"} },
+        y:{
+          ticks:{color:"#C8C8C0"},
+          grid:{color:"#232323"},
+          min: metric.max ? 0 : undefined,
+          max: metric.max || undefined
+        }
+      }
+    }
+  });
+}
+
+document.querySelectorAll('.chip input').forEach(cb=>{
+  cb.addEventListener('change', ()=>{
+    renderTable();
+    renderChart();
+  });
+});
+
+renderTable();
+renderMetricButtons();
+renderChart();
+</script>
+</body>
+</html>
